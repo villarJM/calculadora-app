@@ -2,15 +2,17 @@ import './App.css'
 function App() {
 
   return (
-    <div>
+    <div className="app">
       <h1>Calculator</h1>
       <hr />
       <table style={{
-        width: '400px'
+        width: '400px', margin: 'auto'
       }}>
         {/*FIRT ROW*/}
         <tr>
-          <td colSpan={4}>RESULTADO</td>
+          <td colSpan={4} style={{
+            border: '1px solid black', textAlign: 'end'
+            }}>RESULTADO</td>
         </tr>
         {/*SECOND ROW*/}
         <tr>
