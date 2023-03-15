@@ -5,14 +5,29 @@ const buttonsClasses = 'btn btn-primary w-75 mt-2';
 
 function App() {
   const [screen, setScreen] = useState('0');
-  const handleButtonClick = () => {
-    if(screen === '0') {
-      setScreen('9');
+  const handleButtonClick = (e) => {
+    const value = e.target.value;
+    if(value === '.'){
+      if(screen.indexOf('.') !== -1) return;
+    }
+    if(value === 'C') {
+      setScreen('0');
+      return;
+    }
+    if (screen === '0' && value !== '.') {
+      setScreen(value);
     } else {
-      setScreen(`${screen}9`);
+      setScreen(`${screen}${value}`)
     }
   };
-
+  const handleDelButtonClick = () => {
+    if(screen.length === 1){
+      setScreen('0')
+    } else {
+      setScreen(screen.slice(0,-1));
+    }
+    
+  }
   return (
     <div className="app">
       <h1>Calculator</h1>
@@ -31,7 +46,9 @@ function App() {
           <td>
             <button 
               type='button'
-              className={buttonsClasses}>C
+              className={buttonsClasses}
+              value='C'
+              onClick={(e) => handleButtonClick(e)}>C
             </button>
           </td>
           <td>
@@ -57,16 +74,21 @@ function App() {
           <td>
             <button 
               type='button'
-              className={buttonsClasses}>7
+              className={buttonsClasses}
+              value='7'
+              onClick={(e) => handleButtonClick(e)}>7
             </button>
           </td>
           <td><button 
               type='button'
-              className={buttonsClasses}>8</button></td>
+              className={buttonsClasses}
+              value='8'
+              onClick={(e) => handleButtonClick(e)}>8</button></td>
           <td><button 
               type='button'
               className={buttonsClasses}
-              onClick={handleButtonClick}>9</button></td>
+              value='9'
+              onClick={(e) => handleButtonClick(e)}>9</button></td>
           <td rowSpan={2}><button 
               type='button'
               className={buttonsClasses}
@@ -76,25 +98,37 @@ function App() {
         <tr>
           <td><button 
               type='button'
-              className={buttonsClasses}>4</button></td>
+              className={buttonsClasses}
+              value='4'
+              onClick={(e) => handleButtonClick(e)}>4</button></td>
           <td><button 
               type='button'
-              className={buttonsClasses}>5</button></td>
+              className={buttonsClasses}
+              value='5'
+              onClick={(e) => handleButtonClick(e)}>5</button></td>
           <td><button 
               type='button'
-              className={buttonsClasses}>6</button></td>
+              className={buttonsClasses}
+              value='6'
+              onClick={(e) => handleButtonClick(e)}>6</button></td>
         </tr>
         {/*FIFTH ROW*/}
         <tr>
           <td><button 
               type='button'
-              className={buttonsClasses}>1</button></td>
+              className={buttonsClasses}
+              value='1'
+              onClick={(e) => handleButtonClick(e)}>1</button></td>
           <td><button 
               type='button'
-              className={buttonsClasses}>2</button></td>
+              className={buttonsClasses}
+              value='2'
+              onClick={(e) => handleButtonClick(e)}>2</button></td>
           <td><button 
               type='button'
-              className={buttonsClasses}>3</button></td>
+              className={buttonsClasses}
+              value='3'
+              onClick={(e) => handleButtonClick(e)}>3</button></td>
           <td rowSpan={2}><button 
               type='button'
               className={buttonsClasses}
@@ -102,14 +136,22 @@ function App() {
         </tr>
         {/*SIXTH ROW*/}
         <tr>
-          <td colSpan={2}><button 
+        <td><button 
               type='button'
-              className='btn btn-primary'
-              style={{width:"175px"}}>0</button></td>
+              className={buttonsClasses}
+              onClick={handleDelButtonClick}
+              > DEL </button></td>
+          <td><button 
+              type='button'
+              className={buttonsClasses}
+              value='0'
+              onClick={(e) => handleButtonClick(e)}>0</button></td>
           <td>
             <button 
               type='button'
-              className={buttonsClasses}>.</button>
+              className={buttonsClasses}
+              value='.'
+              onClick={(e) => handleButtonClick(e)}>.</button>
           </td>
         </tr>
       </table>
