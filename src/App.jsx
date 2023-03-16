@@ -4,6 +4,9 @@ import './App.css'
 const buttonsClasses = 'btn btn-primary w-75 mt-2';
 
 function App() {
+  const [operator, setOperator] = useState('');
+  const [previousValue, setPreviousValue] = useState('');
+  const [clearScreen, setClearScreen] = useState(false);
   const [screen, setScreen] = useState('0');
   const handleButtonClick = (e) => {
     const value = e.target.value;
@@ -13,6 +16,11 @@ function App() {
     if(value === 'C') {
       setScreen('0');
       return;
+    }
+    if (clearScreen){
+      setScreen(value);
+      setClearScreen(false);
+      return
     }
     if (screen === '0' && value !== '.') {
       setScreen(value);
@@ -26,7 +34,25 @@ function App() {
     } else {
       setScreen(screen.slice(0,-1));
     }
+  }
+  const handleOperationButtononClick = (e) => {
+    setClearScreen(true);
+    setPreviousValue(screen);
+    setOperator(e.target.value);
+  }
+  const handleEqualsButtonClick = () => {
+    let result = 0;
+    let a = +previousValue;
+    let b = +screen;
+    switch (operator) {
+      case '+':
+        result = a + b;
+        break;
     
+      default:
+        break;
+    }
+    setScreen(result);
   }
   return (
     <div className="app">
@@ -92,7 +118,9 @@ function App() {
           <td rowSpan={2}><button 
               type='button'
               className={buttonsClasses}
-              style={{height: "85px"}}>+</button></td>
+              style={{height: "85px"}}
+              value='+'
+              onClick={(e) => handleOperationButtononClick(e)}>+</button></td>
         </tr>
         {/*FOURTH ROW*/}
         <tr>
@@ -132,7 +160,8 @@ function App() {
           <td rowSpan={2}><button 
               type='button'
               className={buttonsClasses}
-              style={{height: "85px"}}> = </button></td>
+              style={{height: "85px"}}
+              onClick={(e) => handleEqualsButtonClick(e)}> = </button></td>
         </tr>
         {/*SIXTH ROW*/}
         <tr>
