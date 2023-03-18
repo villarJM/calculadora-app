@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css'
+import Button from './components/Button';
 
 const buttonsClasses = 'btn btn-primary w-75 mt-2';
 
@@ -41,18 +42,31 @@ function App() {
     setOperator(e.target.value);
   }
   const handleEqualsButtonClick = () => {
-    let result = 0;
+    let result = '0';
     let a = +previousValue;
     let b = +screen;
     switch (operator) {
       case '+':
         result = a + b;
         break;
-    
+      case '-':
+        result = a - b;
+        break;
+      case '*':
+        result = a * b;
+        break;
+      case '/':
+        if(b === 0){
+          result = 'Infinito'
+          setClearScreen(true);
+        } else {
+          result = a / b;
+        }
+        break;
       default:
         break;
     }
-    setScreen(result);
+    setScreen(result.toString());
   }
   return (
     <div className="app">
@@ -80,18 +94,24 @@ function App() {
           <td>
             <button 
               type='button'
-              className={buttonsClasses}>/
+              className={buttonsClasses}
+              value='/'
+              onClick={(e) => handleOperationButtononClick(e)}>/
             </button>
           </td>
           <td>
             <button 
               type='button'
-              className={buttonsClasses}>*
+              className={buttonsClasses}
+              value='*'
+              onClick={(e) => handleOperationButtononClick(e)}>*
             </button>
           </td>
           <td><button 
               type='button'
-              className={buttonsClasses}>-
+              className={buttonsClasses}
+              value='-'
+              onClick={(e) => handleOperationButtononClick(e)}>-
             </button>
           </td>
         </tr>
@@ -110,7 +130,7 @@ function App() {
               className={buttonsClasses}
               value='8'
               onClick={(e) => handleButtonClick(e)}>8</button></td>
-          <td><button 
+          <td colSpan={1}><button 
               type='button'
               className={buttonsClasses}
               value='9'
@@ -129,11 +149,17 @@ function App() {
               className={buttonsClasses}
               value='4'
               onClick={(e) => handleButtonClick(e)}>4</button></td>
-          <td><button 
+              <Button
+                Classes={buttonsClasses}
+                handleClick={handleButtonClick}
+                rows='1'
+                style={{}}
+                value='5'/>
+          {/* <td><button 
               type='button'
               className={buttonsClasses}
               value='5'
-              onClick={(e) => handleButtonClick(e)}>5</button></td>
+              onClick={(e) => handleButtonClick(e)}>5</button></td> */}
           <td><button 
               type='button'
               className={buttonsClasses}
